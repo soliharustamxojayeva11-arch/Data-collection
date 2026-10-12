@@ -5,11 +5,11 @@ import json
 
 CITY = "Tashkent"
 TOKEN = os.getenv("WAQI_TOKEN")
-TOKEN = "93a82d5b1f9ce325db6fd01a64278d0e3421a28d"
 BUFFER_FILE = "buffer.json"
 DATA_FILE = "data.csv"
 
 url = f"https://waqi.info{CITY}/?token={TOKEN}"
+
 try:
     response = requests.get(url).json()
     pm25 = response["data"]["iaqi"]["pm25"]["v"]
@@ -38,9 +38,7 @@ if len(data) >= 8:
         
     if os.path.exists(BUFFER_FILE):
         os.remove(BUFFER_FILE)   
-        
-    if os.path.exists(BUFFER_FILE):
-        os.remove(BUFFER_FILE)
+
     print(f"info for today: {today}: {avg_pm25}")
 else:
     with open(BUFFER_FILE, "w") as f:
