@@ -8,7 +8,12 @@ on:
 jobs:
   collect-data:
     runs-on: ubuntu-latest
-
+    
+  permissions:
+      contents: write  # Дает роботу право пушить изменения в репозиторий
+    steps:
+      - name: Checkout repository
+        
     steps:
     
     - name: Checkout repository
