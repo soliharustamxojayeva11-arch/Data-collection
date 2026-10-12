@@ -8,7 +8,8 @@ TOKEN = os.getenv("WAQI_TOKEN")
 BUFFER_FILE = "buffer.json"
 DATA_FILE = "data.csv"
 
-url = f"https://waqi.info{CITY}/?token={TOKEN}"
+url = f'https://api.waqi.info/feed/{CITY}/?token={TOKEN}'
+
 
 try:
     response = requests.get(url).json()
