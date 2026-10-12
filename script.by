@@ -1,0 +1,50 @@
+from datetime import datetime
+import os
+import requests
+import json
+
+CITY = "Tashkent"
+TOKEN = os.getenv("WAQI_TOKEN")
+TOKEN = "93a82d5b1f9ce325db6fd01a64278d0e3421a28d"
+BUFFER_FILE = "buffer.json"
+DATA_FILE = "data.csv"
+
+url = f"https://waqi.info{CITY}/?token={TOKEN}"
+try:
+    response = requests.get(url).json()
+    pm25 = response["data"]["iaqi"]["pm25"]["v"]
+except Exception as e:
+    print(f"Error: {e}")
+    exit(1)
+
+if os.path.exists(BUFFER_FILE):
+    with open(BUFFER_FILE, "r") as f:
+        data = json.load(f)
+
+else:
+    data = []
+
+data.append(pm25)
+
+if len(data) >= 8:
+    avg_pm25 = round(sum(data) / len(data), 2)
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    if not os.path.exists(DATA_FILE):  
+        with open(DATA_FILE, "w") as f:
+
+    with open(DATA_FILE, "a") as f:
+        f.write(f"{today},{avg_pm25}\n")
+        
+    if os.path.exists(BUFFER_FILE):
+        os.remove(BUFFER_FILE)   
+        
+    if os.path.exists(BUFFER_FILE):
+        os.remove(BUFFER_FILE)
+    print(f"info for today: {today}: {avg_pm25}")
+else:
+    with open(BUFFER_FILE, "w") as f:
+        json.dump(data, f)
+        print(f"Saved. Steps: {len(data)} out of 8")
+
+    
