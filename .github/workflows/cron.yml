@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     
   permissions:
-      contents: write  # Дает роботу право пушить изменения в репозиторий
+      contents: write  
     steps:
       - name: Checkout repository
         
@@ -41,7 +41,7 @@ jobs:
     - name: Commit and Push changes
       run: |
         git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@://github.com"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git add data.csv buffer.json || true
         git commit -m "Auto-update data: $(date -u +'%Y-%m-%d %H:%M:%S') UTC" || true
         git push
