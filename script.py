@@ -28,7 +28,7 @@ data.append(current_pm25)
 
 if len(data) >= 8:
     pm25 = round(sum(data) / len(data), 2)
-    date = datetime.now().strftime("%Y-%m-%d")
+    date = datetime.now().strftime("%Y/%m/%d")
 
     if not os.path.exists(DATA_FILE):  
         with open(DATA_FILE, "w") as f:
