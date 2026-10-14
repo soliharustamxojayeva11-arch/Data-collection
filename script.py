@@ -29,19 +29,27 @@ data.append(current_pm25)
 if len(data) >= 8:
     pm25 = round(sum(data) / len(data), 2)
     date = datetime.now().strftime("%Y/%m/%d")
+    
+    rows = {}
+    if os.path.exists(DATA_FILE) and os.path.getsize(DATA_FILE) > 0:
+        with open(DATA_FILE, "r", encoding="utf-8") as f:
+            for line in f.readlines()[1:]:
+                parts = [p.strip() for p in line.split(',') if p.strip()]
+                if len(parts) >= 2:
+                    rows[parts[0]] = parts[1]
 
-    if not os.path.exists(DATA_FILE):  
-        with open(DATA_FILE, "w") as f:
-            f.write("date,pm25\n")
+    rows[date] = str(pm25)
 
-    with open(DATA_FILE, "a") as f:
-        f.write(f"{date},{pm25}\n")
-        
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
+        f.write("date,pm25\n")
+        for sorted_date in sorted(rows.keys()):
+            f.write(f"{sorted_date},{rows[sorted_date]}\n")
+            
     if os.path.exists(BUFFER_FILE):
-        os.remove(BUFFER_FILE)   
-
+        os.remove(BUFFER_FILE)
     print(f"info for today: {date}: {pm25}")
 else:
     with open(BUFFER_FILE, "w") as f:
         json.dump(data, f)
     print(f"Saved. Steps: {len(data)} out of 8")
+    
