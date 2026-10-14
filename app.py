@@ -298,7 +298,7 @@ st.markdown(
 
 st.subheader("🌤️ Current Atmospheric Conditions")
 
-token = '93a82d5b1f9ce325db6fd01a64278d0e3421a28d'
+token = 'WAQI_TOKEN'
 city = 'Tashkent'
 
 url_api = f'https://api.waqi.info/feed/{city}/?token={token}'
