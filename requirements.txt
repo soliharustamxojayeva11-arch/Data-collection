@@ -3,3 +3,8 @@ pandas
 requests
 joblib
 plotly
+datetime
+requests
+pystan==2.19.1.1
+prophet
+
